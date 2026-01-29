@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Choose Your Education Level</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script>
+if(localStorage.getItem('isLoggedIn') !== 'true'){
+  alert("Please login or register first");
+  window.location.href = "login_form.html";
+}
+</script>
+
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                  url("images/student1.jpg") center/cover no-repeat;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container-levels {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 15px;
+    }
+
+    .card-level {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      border-radius: 15px;
+      width: 250px;
+      margin: 15px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      padding: 20px;
+      flex-shrink: 0;
+    }
+
+    .card-level:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .card-level img {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    h1.title-page {
+      text-align: center;
+      margin-top: 40px;
+      font-weight: bold;
+    }
+
+    @media(max-width:768px){
+      .container-levels {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1 class="title-page">Choose Your Education Level</h1>
+
+  <div class="container-levels">
+
+    <!-- KG School -->
+    <div class="card-level" onclick="goTo('kg.html')">
+      <img style="width: 170px;height: 150px;" src="image/Screenshot 2026-01-25 214746.png"  alt="KG School">
+      <h5>KG School</h5>
+      <p>Interactive learning for kindergarten students</p>
+    </div>
+
+    <!-- Elementary -->
+    <div class="card-level" onclick="goTo('elementary_grade.html')">
+      <img style="width: 170px;height: 150px;" src="image/Screenshot 2026-01-25 215430.png" alt="Elementary School">
+      <h5>Elementary</h5>
+      <p>Grade 1–8 educational resources</p>
+    </div>
+
+    <!-- High School -->
+    <div class="card-level" onclick="goTo('highschool.html')">
+      <img style="width: 170px;height: 150px;" src="image/Screenshot 2026-01-26 090827.png" alt="High School">
+      <h5>High School</h5>
+      <p>Grade 9–12 resources and subjects</p>
+    </div>
+
+    <!-- University -->
+    <div class="card-level" onclick="goTo('university.html')">
+      <img style="width: 170px;height: 150px;" src="image/Screenshot 2026-01-26 090900.png"  alt="University">
+      <h5>University</h5>
+      <p>Department-wise educational resources</p>
+    </div>
+
+    <!-- Technology -->
+    <div class="card-level" onclick="goTo('technology.html')">
+      <img style="width: 170px;height: 150px;" src="image/Screenshot 2026-01-26 091329.png"  alt="Technology">
+      <h5>Technology</h5>
+      <p>Specialized tech courses and materials</p>
+    </div>
+
+  </div>
+
+  <!-- JS -->
+  <script>
+    function goTo(page) {
+      window.location.href = page;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Course Materials</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body{ background:#f4f6f9; font-family:Arial; }
+.navbar{ background:#000; }
+.hero{
+  height:35vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  text-align:center;
+  background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+  url("image/Screenshot 2026-01-27 200812.png") center/cover;
+}
+.material-card{
+  background:white;
+  border-radius:10px;
+  padding:12px;
+  box-shadow:0 3px 8px rgba(0,0,0,.08);
+}
+.material-card h6{ font-size:14px; margin-bottom:8px; }
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark px-3">
+  <span class="navbar-brand">Ethio Student</span>
+  <div class="ms-auto d-flex gap-2">
+    <button class="btn btn-outline-light btn-sm" onclick="setType('pdf')">PDF</button>
+    <button class="btn btn-outline-light btn-sm" onclick="setType('video')">VIDEO</button>
+    <button class="btn btn-warning btn-sm" onclick="history.back()">BACK</button>
+  </div>
+</nav>
+
+<!-- <section class="hero">
+  <div>
+    <h1 id="courseTitle"></h1>
+    <p id="collegeTitle"></p>
+  </div>
+</section> -->
+<section class="hero" id="heroSection">
+  <div>
+    <h1 id="courseTitle">Course Materials</h1>
+    <p id="collegeTitle"></p>
+  </div>
+</section>
+
+<div class="container my-4">
+  <div class="row g-3" id="materialsContainer"></div>
+</div>
+
+<script>
+const data={
+  Technology:{
+    materials:{
+      "Programming I":[
+        {title:"Unit 1 – Introduction",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+        {title:"Unit 2 – Basics",type:"pdf",file:"assets/files/information_system/DCCN CH7.pdf"},
+         {title:"Unit 1 – Introduction",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+        {title:"Unit 2 – Basics",type:"pdf",file:"assets/files/information_system/DCCN CH7.pdf"},
+         {title:"Unit 1 – Introduction",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+        {title:"Unit 2 – Basics",type:"pdf",file:"assets/files/information_system/DCCN CH7.pdf"},
+        {title:"Programming I Video",type:"video",file:"https://www.youtube.com/embed/zOjov-2OZ0E"}
+      ],
+      "Data Structures":[
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+         {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+         {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+         {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+
+        
+      ],
+      "Programming II":[
+        {title:"OOP Concepts",type:"pdf",file:"assets/files/programming2/oop.pdf"},
+         {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+         {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+         {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+      ],
+      "Database":[
+        {title:"SQL Basics",type:"pdf",file:"assets/files/database/sql.pdf"},
+         {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+         {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+         {title:"Stacks & Queues",type:"pdf",file:"assets/files/data_structures/unit1.pdf"},
+        {title:"Stacks & Queues",type:"pdf",file:"assets/files/information_system/DCCN CH8.pdf"},
+      ]
+    }
+  }
+};
+
+const params=new URLSearchParams(window.location.search);
+const college=params.get("college");
+const course=params.get("course");
+
+document.getElementById("courseTitle").innerText=course+" Materials";
+document.getElementById("collegeTitle").innerText=college+" College";
+/* ===== HERO BACKGROUND BY COLLEGE ===== */
+const heroBackgrounds = {
+  Technology: "image/Screenshot 2026-01-27 200812.png",
+  Business_And_Economics: "image/Screenshot 2026-01-28 104056.png",
+  Medicine_And_Health_Science: "image/health.jpg",
+  Engineering: "image/Screenshot 2026-01-28 105234.png",
+  Education_And_Bihavioral_Science: "image/Screenshot 2026-01-28 105234.png",
+  Natural_And_Computational: "image/Screenshot 2026-01-28 105234.png",
+  Agriculture_Science: "image/Screenshot 2026-01-28 105234.png",
+  School_Of_Law: "image/Screenshot 2026-01-28 105234.png",
+  School_Of_Veternary_Medicine: "image/Screenshot 2026-01-28 105234.png",
+  Social_Science_And_Humanities: "image/Screenshot 2026-01-28 105234.png",
+  Fresh_Student: "image/Screenshot 2026-01-28 105234.png",
+  Rimedial_Student: "image/Screenshot 2026-01-28 105234.png",
+
+
+};
+
+const hero = document.getElementById("heroSection");
+
+if (heroBackgrounds[college]) {
+  hero.style.background = `
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url("${heroBackgrounds[college]}") center/cover no-repeat
+  `;
+}
+
+
+let currentType="pdf";
+
+function setType(t){
+  currentType=t;
+  showMaterials();
+}
+
+function showMaterials(){
+  const box=document.getElementById("materialsContainer");
+  box.innerHTML="";
+
+  (data[college]?.materials[course]||[])
+    .filter(m=>m.type===currentType)
+    .forEach(m=>{
+      let content="";
+      if(m.type==="pdf"){
+        content=`
+          <div class="d-flex gap-2">
+            <a href="${m.file}" target="_blank" class="btn btn-primary btn-sm">Open</a>
+            <a href="${m.file}" download class="btn btn-success btn-sm">Download</a>
+          </div>`;
+      }
+      if(m.type==="video"){
+        content=`<div class="ratio ratio-16x9"><iframe src="${m.file}" allowfullscreen></iframe></div>`;
+      }
+
+      box.innerHTML+=`
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="material-card">
+            <h6>${m.title}</h6>
+            ${content}
+          </div>
+        </div>`;
+    });
+}
+
+showMaterials();
+</script>
+
+</body>
+</html>
