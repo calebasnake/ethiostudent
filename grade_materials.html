@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Grade Materials</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body{
+  background:#f4f6f9;
+  font-family:Arial, sans-serif;
+}
+
+/* NAVBAR */
+.navbar{ background:#000; }
+
+/* HERO */
+.hero{
+  height:65vh;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background-size:cover;
+  background-position:center;
+}
+
+/* MATERIAL CARD (SMALLER) */
+.material-card{
+  background:white;
+  padding:10px 12px;          /* smaller padding */
+  border-radius:10px;
+  box-shadow:0 3px 8px rgba(0,0,0,.08);
+}
+
+.material-card h6{
+  font-size:14px;             /* smaller title */
+  margin-bottom:8px;
+}
+
+.material-card .btn{
+  font-size:12px;
+  padding:4px 8px;
+}
+
+footer{
+  background:#000;
+  color:white;
+  padding:15px;
+  text-align:center;
+  margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark px-3">
+  <span class="navbar-brand">Ethio Student</span>
+  <div class="ms-auto d-flex gap-1">
+    <button class="btn btn-outline-light btn-sm" onclick="setType('pdf')">PDF Book</button>
+    <button class="btn btn-outline-light btn-sm" onclick="setType('video')">VIDEO</button>
+    <!-- <button class="btn btn-outline-light btn-sm" onclick="setType('image')">IMAGE</button> -->
+    <button class="btn btn-outline-light btn-sm" onclick="setType('question')">QUESTION</button>
+    <button class="btn btn-warning btn-sm" onclick="goBack()">BACK</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div>
+    <h1 id="gradeTitle">New Cariculum</h1>
+    <h1>New Cariculum Ethiopia Text Book</h1>
+    <p>Study Materials</p>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<div class="container my-4">
+  <div class="row g-3" id="materialsContainer"></div>
+</div>
+
+<footer>© 2026 Ethio Student</footer>
+
+<script>
+/* ===== URL PARAM ===== */
+const params = new URLSearchParams(window.location.search);
+const grade = params.get("grade");
+document.getElementById("gradeTitle").innerText = grade;
+
+/* ===== HERO BACKGROUND ===== */
+const heroBackgrounds = {
+  "Grade 9":"image/grade9.jpg",
+  "Grade 10":"image/grade10.jpg",
+  "Grade 11":"image/grade11.jpg",
+  "Grade 12":"image/Screenshot 2026-01-26 094859.png",
+  "Entrance Exam":"image/entrance.jpg"
+};
+
+document.getElementById("heroSection").style.backgroundImage =
+`linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+ url('${heroBackgrounds[grade] || "image/default.jpg"}')`;
+
+/* ===== MATERIAL DATA ===== */
+const data = {
+  "Grade 12":[
+     {title:"amharic PDF Book",type:"pdf",file:"highschool/grade 12/amharic_ethio_student9d86.pdf"},
+        {title:"Civic and ethical education PDF Book",type:"pdf",file:"highschool/grade 12/civic and ethical education_ethio_student.pdf"},
+    {title:"general business PDF Book",type:"pdf",file:"highschool/grade 12/general business_ethio_student.pdf"},
+    {title:"agriculture PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-agriculture_fetena_net_e1e8.pdf"},
+    {title:"biology PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-biology_ethio_student.pdf"},
+    {title:"chemistry PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-chemistry_ethio_student.pdf"},
+    {title:"economics PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-economics_ethio_student.pdf"},
+    {title:"english PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-english_ethio_student.pdf"},
+    {title:"geography PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-geography_ethio_student.pdf"},
+    {title:"history PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-history_ethio_student.pdf"},
+        {title:"Ict PDF",type:"pdf",file:"highschool/grade 12/grade 12-ict_ethio_student.pdf"},
+    {title:"mathematics PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-mathematics_ethio_student.pdf"},
+    {title:"physics PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-physics_ethio_student.pdf"},
+  ],
+  "Grade 11":[
+     {title:"amharic PDF Book",type:"pdf",file:"highschool/grade 11/grade 11 amharic_ethio_student.pdf"},
+        {title:"Civic and ethical education PDF Book",type:"pdf",file:"highschool/grade 11/civics and ethical education_ethio_student.pdf"},
+    {title:"general business PDF Book",type:"pdf",file:"highschool/grade 11/general business_ethio_student.pdf"},
+    {title:"agriculture PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-agriculture_ethio_student.pdf"},
+    {title:"biology PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-biology_ethio_student.pdf"},
+    {title:"chemistry PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-chemistry_ethio_student.pdf"},
+    {title:"economics PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-economics_ethio_student.pdf"},
+    {title:"english PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-english_ethio_student.pdf"},
+    {title:"geography PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-geography_ethio_student.pdf"},
+    {title:"history PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-history_ethio_student.pdf"},
+        {title:"Ict PDF",type:"pdf",file:"highschool/grade 11/grade 11-ict_ethio_student.pdf"},
+    {title:"mathematics PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-mathematics_ethio_student.pdf"},
+    {title:"physics PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-physics_ethio_student.pdf"},
+  ],
+   "Grade 10":[
+     {title:"amharic PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-amharic_ethio_student.pdf"},
+        {title:"Civic and ethical education PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-citizenship education_ethio_student.pdf"},
+    {title:"biology PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-biology_ethio_student.pdf"},
+    {title:"chemistry PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-chemistry_ethio_student.pdf"},
+    {title:"economics PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-economics_ethio_student.pdf"},
+    {title:"english PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-english_ethio_student.pdf"},
+    {title:"geography PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-geography_ethio_student.pdf"},
+    {title:"history PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-history_ethio_student.pdf"},
+        {title:"Ict PDF",type:"pdf",file:"highschool/grade 10/grade 10-ict_ethio_student.pdf"},
+    {title:"mathematics PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-mathematics_ethio_student.pdf"},
+    {title:"health and physical education PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-health and physical education_ethio_student.pdf"},
+        {title:"physics PDF Book",type:"pdf",file:"highschool/grade 10/grade 10-physics_ethio_student.pdf"},
+
+  ],
+   "Grade 9":[
+     {title:"amharic PDF Book",type:"pdf",file:"highschool/grade 11/grade 11 amharic_ethio_student.pdf"},
+        {title:"Civic and ethical education PDF Book",type:"pdf",file:"highschool/grade 11/civics and ethical education_ethio_student.pdf"},
+    {title:"general business PDF Book",type:"pdf",file:"highschool/grade 11/general business_ethio_student.pdf"},
+    {title:"agriculture PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-agriculture_ethio_student.pdf"},
+    {title:"biology PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-biology_ethio_student.pdf"},
+    {title:"chemistry PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-chemistry_ethio_student.pdf"},
+    {title:"economics PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-economics_ethio_student.pdf"},
+    {title:"english PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-english_ethio_student.pdf"},
+    {title:"geography PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-geography_ethio_student.pdf"},
+    {title:"history PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-history_ethio_student.pdf"},
+        {title:"Ict PDF",type:"pdf",file:"highschool/grade 11/grade 11-ict_ethio_student.pdf"},
+    {title:"mathematics PDF Book",type:"pdf",file:"highschool/grade 12/grade 12-mathematics_ethio_student.pdf"},
+    {title:"physics PDF Book",type:"pdf",file:"highschool/grade 11/grade 11-physics_ethio_student.pdf"},
+  ]
+};
+
+let currentType="pdf";
+
+/* ===== FUNCTIONS ===== */
+function setType(type){
+  currentType=type;
+  showMaterials();
+}
+
+function showMaterials(){
+  const box=document.getElementById("materialsContainer");
+  box.innerHTML="";
+
+  (data[grade]||[])
+  .filter(m=>m.type===currentType)
+  .forEach(m=>{
+
+    let content="";
+
+    if(m.type==="pdf"){
+      content=`
+        <div class="d-flex gap-1">
+          <a href="${m.file}" target="_blank" class="btn btn-primary btn-sm">Open</a>
+          <a href="${m.file}" download class="btn btn-success btn-sm">Download</a>
+        </div>
+      `;
+    }
+
+    if(m.type==="video"){
+      content=`<div class="ratio ratio-16x9">
+        <iframe src="${m.file}" allowfullscreen></iframe>
+      </div>`;
+    }
+
+    if(m.type==="image"){
+      content=`<img src="${m.file}" class="img-fluid rounded">`;
+    }
+
+    if(m.type==="question"){
+      content=`<a href="${m.file}" target="_blank" class="btn btn-secondary btn-sm">
+        Open Questions
+      </a>`;
+    }
+
+    box.innerHTML+=`
+      <div class="col-lg-2 col-md-2 col-sm-4">
+        <div class="material-card">
+          <h6>${m.title}</h6>
+          ${content}
+        </div>
+      </div>
+    `;
+  });
+}
+
+function goBack(){
+  window.history.back();
+}
+
+showMaterials();
+</script>
+
+</body>
+</html>

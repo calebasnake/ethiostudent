@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ethio Student | Learning Materials</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<script>
+if(localStorage.getItem('isLoggedIn') !== 'true'){
+  alert("Please login first!");
+  window.location.href = "login_form.html";
+}
+</script>
+
+<style>
+body{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Navbar */
+.navbar{ background:#000; }
+.navbar .nav-link{ cursor:pointer; }
+
+/* Hero */
+.hero-mini{
+  padding:60px 20px;
+  text-align:center;
+  color:white;
+  background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+             url("images/student1.jpg") center/cover no-repeat;
+}
+
+/* Subject bar */
+.subject-bar{
+  background:#f8f9fa;
+  padding:12px;
+  text-align:center;
+}
+.subject-bar button{
+  cursor:pointer;
+  margin:4px;
+}
+
+/* Cards */
+.material-card{
+  border-radius:12px;
+  transition:.3s;
+}
+.material-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 25px rgba(0,0,0,.2);
+}
+
+/* ===== APP HERO ===== */
+.app-hero{
+  padding:70px 20px;
+  background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
+             url("images/student1.jpg") center/cover no-repeat;
+  color:white;
+}
+.app-wrapper{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:40px;
+  flex-wrap:wrap;
+}
+/* ===== APP INTRO HERO ===== */
+.app-intro-hero{
+  padding:35px 20px;
+  text-align:center;
+  background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+             url("images/student1.jpg") center/cover no-repeat;
+  color:white;
+}
+
+.app-intro-hero h2{
+  font-weight:700;
+}
+
+.app-intro-hero p{
+  max-width:700px;
+  margin:10px auto 0;
+  font-size:16px;
+  opacity:.9;
+}
+
+.app-profile img{
+  max-width:320px;
+  width:100%;
+  border-radius:20px;
+  box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+.app-intro h5{ color:#FFCE03; }
+.store-buttons img{
+  height:55px;
+  margin-right:15px;
+  margin-top:15px;
+  cursor:pointer;
+  transition:.3s;
+}
+#mypdf{
+  width: 85%;
+  height: 975;
+}
+.store-buttons img:hover{ transform:scale(1.05); }
+
+@media(max-width:768px){
+  .app-wrapper{ text-align:center; justify-content:center; }
+}
+
+/* Footer */
+footer{
+  background:#000;
+  color:white;
+  padding:15px 0;
+  margin-top:auto;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item"><a class="nav-link active" onclick="showSection('pdf')">PDF</a></li>
+      <li class="nav-item"><a class="nav-link" onclick="showSection('image')">Images</a></li>
+      <li class="nav-item"><a class="nav-link" onclick="showSection('question')">Questions</a></li>
+      <li class="nav-item"><a class="nav-link" onclick="showSection('video')">Videos</a></li>
+      <li class="nav-item"><a class="nav-link" onclick="showSection('app')">Apps</a></li>
+    </ul>
+    <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- ================= PDF ================= -->
+<div id="pdf" class="section">
+
+  <section class="hero-mini">
+    <h2>PDF Learning Materials</h2>
+    <p>Books, notes and exam preparation</p>
+  </section>
+
+  <div class="subject-bar">
+    <button class="btn btn-primary subject-btn" onclick="showSubject(event,'pdf-math')">Math</button>
+    <button class="btn btn-outline-primary subject-btn" onclick="showSubject(event,'pdf-physics')">Physics</button>
+    <button class="btn btn-outline-primary subject-btn" onclick="showSubject(event,'pdf-chem')">Chemistry</button>
+  </div>
+
+  <div class="container mt-3">
+    <input type="text" class="form-control" placeholder="Search materials..." onkeyup="searchMaterials(this)">
+  </div>
+
+  <div class="container mt-4">
+
+    <div id="pdf-math" class="subject-content">
+      <div class="row">
+        <div class="col-md-4 mb-3 material-item">
+          <div class="card material-card p-3">
+            <!-- <h6>Math Textbook</h6>
+            <p>Full syllabus PDF</p> -->
+            <iframe id="mypdf" src="advanced database chapter 3.pdf" frameborder="0"></iframe>
+            <a href="#" class="btn btn-success btn-sm">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pdf-physics" class="subject-content d-none">
+      <div class="row">
+        <div class="col-md-4 mb-3 material-item">
+          <div class="card material-card p-3">
+            <h6>Physics Notes</h6>
+            <p>Concept explanation</p>
+            <a href="#" class="btn btn-success btn-sm">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pdf-chem" class="subject-content d-none">
+      <div class="row">
+        <div class="col-md-4 mb-3 material-item">
+          <div class="card material-card p-3">
+            <h6>Chemistry Guide</h6>
+            <p>Exam preparation</p>
+            <a href="#" class="btn btn-success btn-sm">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= IMAGE ================= -->
+<div id="image" class="section d-none">
+  <section class="hero-mini"><h2>Images</h2><p>Diagrams & charts</p></section>
+</div>
+
+<!-- ================= QUESTIONS ================= -->
+<div id="question" class="section d-none">
+  <section class="hero-mini"><h2>Questions</h2><p>Practice exams</p></section>
+</div>
+
+<!-- ================= VIDEO ================= -->
+<div id="video" class="section d-none">
+  <section class="hero-mini"><h2>Videos</h2><p>Video lessons</p></section>
+</div>
+
+<!-- ================= APPS ================= -->
+ <!-- ===== APP INTRO SMALL HERO ===== -->
+<section class="app-intro-hero">
+  <h2>Educational Mobile Applications</h2>
+  <p>
+    Discover powerful mobile apps that help students learn smarter,
+    practice faster, and access digital education anytime, anywhere.
+  </p>
+</section>
+
+<div id="app" class="section d-none">
+    
+  <!-- <section class="app-hero">
+    <div class="app-wrapper">
+
+      <div class="app-profile">
+        <img src="https://www.amharabank.com.et/storage/2023/03/mock-1.png">
+      </div>
+
+      <div class="app-intro">
+        <h5>Download ABA Mobile Banking</h5>
+        <h1>Download the app and</h1>
+        <h1>join our digital world</h1>
+
+        <div class="store-buttons">
+          <a href="https://play.google.com/store/apps/details?id=com.amharabank.Aba_mobile_banking" target="_blank">
+            <img src="https://www.amharabank.com.et/storage/2023/07/playstore.png">
+          </a>
+          <a href="https://apps.apple.com/app/aba-mobile-banking/id6450265710" target="_blank">
+            <img src="https://www.amharabank.com.et/storage/2023/07/appstore1-1024x355.png">
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section> -->
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container d-flex justify-content-between flex-wrap">
+    <div>© 2026 Ethio Student | Free Education</div>
+    <div>Facebook | Telegram | YouTube</div>
+  </div>
+</footer>
+
+<script>
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.add('d-none'));
+  document.getElementById(id).classList.remove('d-none');
+}
+
+function showSubject(event,id){
+  const section = event.currentTarget.closest('.section');
+  section.querySelectorAll('.subject-content').forEach(c=>c.classList.add('d-none'));
+  section.querySelectorAll('.subject-btn').forEach(b=>{
+    b.classList.remove('btn-primary');
+    b.classList.add('btn-outline-primary');
+  });
+  document.getElementById(id).classList.remove('d-none');
+  event.currentTarget.classList.add('btn-primary');
+}
+
+function searchMaterials(input){
+  const items = input.closest('.section').querySelectorAll('.material-item');
+  const val = input.value.toLowerCase();
+  items.forEach(i=>{
+    i.style.display = i.innerText.toLowerCase().includes(val) ? "" : "none";
+  });
+}
+
+function logout(){
+  if(confirm("Are you sure you want to logout?")){
+    localStorage.clear();
+    window.location.href="login_form.html";
+  }
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelector(".subject-btn").click();
+});
+</script>
+
+</body>
+</html>
