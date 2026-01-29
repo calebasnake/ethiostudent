@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>University Departments & Courses</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f4f6f9;
+  margin:0;
+}
+
+/* NAVBAR */
+.navbar{ background:#000; }
+
+/* HERO */
+.hero{
+  min-height:55vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+  background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+  url("student3.png") center/cover no-repeat;
+}
+
+/* COLLEGE CARDS */
+.select-card{
+  background:#6c757d;
+  padding:20px;
+  border-radius:14px;
+  text-align:center;
+  color:white;
+  cursor:pointer;
+  transition:.3s;
+}
+.select-card:hover{
+  background:#0d6efd;
+  transform:translateY(-5px);
+}
+
+/* LAYOUT */
+.layout{
+  display:flex;
+  gap:20px;
+  margin-top:20px;
+}
+
+/* DEPARTMENTS */
+.department-panel{
+  width:260px;
+  background:white;
+  padding:15px;
+  border-radius:12px;
+}
+.department-card{
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:8px;
+  cursor:pointer;
+  background:#f1f1f1;
+}
+.department-card.active{
+  background:#0d6efd;
+  color:white;
+}
+
+/* COURSES */
+.course-panel{
+  flex:1;
+  background:white;
+  padding:20px;
+  border-radius:12px;
+}
+.course-card{
+  padding:12px;
+  border-radius:10px;
+  cursor:pointer;
+  border:1px solid #0d6efd;
+}
+.course-card:hover{
+  background:#0d6efd;
+  color:white;
+}
+
+/* MATERIALS */
+.material-card{
+  border-radius:10px;
+}
+
+/* MATERIAL NAV */
+#materialNav .nav-link{ cursor:pointer; }
+#materialNav .nav-link.active{
+  background:#0d6efd;
+  color:white !important;
+}
+
+footer{
+  background:#000;
+  color:white;
+  padding:15px;
+  text-align:center;
+  margin-top:40px;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark px-3">
+  <span class="navbar-brand">Ethio Student</span>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>University Student Portal</h1>
+    <p>Colleges • Departments • Courses • Materials</p>
+  </div>
+</section>
+
+<div class="container">
+
+<!-- COLLEGE SELECTION -->
+<div id="collegeSelection">
+  <h3 class="text-center my-4">Select Your College</h3>
+  <div class="row g-4">
+    <div class="col-md-4"><div class="select-card" onclick="selectCollege('Technology')">College of Technology</div></div>
+    <div class="col-md-4"><div class="select-card" onclick="selectCollege('Business_And_Economics')">College of Business And Economics</div></div>
+    <div class="col-md-4"><div class="select-card" onclick="selectCollege('Medicine_And_Health_Science')">College of Medicine and Health Science</div></div>
+      <div class="col-md-4"><div class="select-card" onclick="selectCollege('Engineering')">College of Engineering</div></div>
+    <div class="col-md-4"><div class="select-card" onclick="selectCollege('Agriculture_Science')">College of Agriculture Science</div></div>
+    <div class="col-md-4"><div class="select-card" onclick="selectCollege('Natural_And_Computational')">College ofNatural And Computational Science</div></div>
+      <div class="col-md-4"><div class="select-card" onclick="selectCollege('Social_Science_And_Humanities')">College Social Science And Humanities</div></div>
+    <div class="col-md-4"><div class="select-card" onclick="selectCollege('Education_And_Bihavioral_Science')"> Education And Bihavioral Science College </div></div>
+    <div class="col-md-4"><div class="select-card" onclick="selectCollege('School_Of_Law')">School Of Law College</div></div>
+        <div class="col-md-4"><div class="select-card" onclick="selectCollege('School_Of_Veternary_Medicine')">College School Of Veternary Medicine</div></div>
+            <div class="col-md-4"><div class="select-card" onclick="selectCollege('Fresh_Student')">Fresh_Student</div></div>
+    <div class="col-md-4"><div class="select-card" onclick="selectCollege('Rimedial_Student')">Rimedial Student</div></div>
+
+  </div>
+</div>
+
+<!-- DEPARTMENT & COURSES -->
+<div id="collegeSection" class="d-none">
+
+  <button class="btn btn-secondary my-3" onclick="backToColleges()">← Back to Colleges</button>
+
+  <div class="layout">
+
+    <!-- DEPARTMENTS -->
+    <div class="department-panel">
+      <h6 class="fw-bold">Departments</h6>
+      <div id="departmentList"></div>
+    </div>
+
+    <!-- COURSES + MATERIALS -->
+    <div class="course-panel">
+      <h5 id="courseTitle"></h5>
+      <div id="courseList" class="d-flex flex-wrap gap-2 mb-4"></div>
+
+      <div id="materialSection" class="d-none">
+        <h5 id="materialTitle"></h5>
+
+        <ul class="nav nav-tabs mb-3" id="materialNav">
+          <li class="nav-item"><a class="nav-link active" onclick="setMaterialType('pdf')">PDF</a></li>
+          <li class="nav-item"><a class="nav-link" onclick="setMaterialType('video')">Video</a></li>
+          <li class="nav-item"><a class="nav-link" onclick="setMaterialType('question')">Questions</a></li>
+        </ul>
+
+        <div id="materialsContainer" class="row"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+<footer>© 2026 Ethio Student</footer>
+
+<script>
+const data={
+  Technology:{
+    departments:["Computer Science","Software Engineering","Information Technology","Information System"],
+    courses:{
+      "Computer Science":["Programming I","Data Structures"],
+      "Software Engineering":["Web Development","Testing"],
+      "Information Technology":["ascasasc","sacascaca"],
+      "Information System":["Intro_Information System and Society","System Analysis and Design", "Programming I","Programming II","Descrete Mathimatics and combinatory","Computer Architacture Organization ","Data Structure And Algorithim","Object Oriented Programming", "Fundamental Of database","Data comunication and networking"," Research method information","Opirating System","Event Driven programming","Internet Programing","Advanced database"]
+      
+    },
+    materials:{
+     "Programming I":[
+ 
+  ],
+    }
+
+  },
+  Business_And_Economics:{
+    departments:["Accounting and Finince","Economics","Management","Marketing Management","Puplic Administration And Development Manager","Turisim And Hotel Management"],
+    courses:{
+      "Accounting and Finince":["Financial Accounting"],
+      "Economics":["Financial Accounting"],
+       "Management":["Financial Accounting"],
+       "Marketing Management":["Financial Accounting"],
+       "Puplic Administration And Development Manager":["Financial Accounting"],
+       "Turisim And Hotel Management":["Financial Accounting"]
+
+    },
+   },
+    Engineering:{
+    departments:["Mechanical Engineering","Chemical Engineering","Electrical and Computure Engineering",
+    "Electro Mechanical Engineering","Civil Engineering","Constraction Management","Geomatics Engineering","Hydroulic Engineering","Architecture"],
+    courses:{
+     "Mechanical Engineering":["math"],
+     "Chemical Engineering":["math"],
+     "Electrical and Computure Engineering":["math"],
+     "Electro Mechanical Engineering":["math"],
+     "Civil Engineering":["math"],
+     "Constraction Management":["math"],
+     "Geomatics Engineering":["math"],
+     "Hydroulic Engineering":["math"],
+     "Architecture ":["math"],
+
+
+    },
+   },
+  Medicine_And_Health_Science:{
+    departments:["Biomedical Science","Pharmacy","Internal Medicine","Surgery","Puplic Health","Comprehensive Nersing","Health Informatics","Medical Labratory Scince",
+      "Ansthesia","Midewifery ","Surgerical Nusring","Pediatric Nursing","Obstetrics and Gynecology","Emergency And Critical Care","Pathiology",
+      "Radiology","Opthalmology","Pediatrics And Child Health","Dentistry"],
+    courses:{
+      "Nursing":["Fundamentals of Nursing"]
+    },
+      "Fundamentals of Nursing":[
+        {title:"Nursing PDF",type:"pdf"}
+      ]
+    },
+    
+     Agriculture_Science:{
+    departments:["Animal Science","Natural Resource Management","Plant Science","Horticalture","Enviromental Science","Food Science And Post_Harvesting Technology"],
+    courses:{
+     "Animal Science":["math"],
+     "Natural Resource Management":["math"],
+     "Plant Science":["math"],
+     "Horticalture":["math"],
+     "Enviromental Science":["math"],
+      "Food Science And Post_Harvesting Technology":["math"],
+
+    },
+   },
+    Natural_And_Computational:{
+    departments:["Enginering","Management"],
+    courses:{
+     "Enginering":["math"]
+    },
+   },
+    Social_Science_And_Humanities:{
+    departments:["English Language And Litrature","Geography And Enviroment studies","civics And Ethical Studies","History And Heritage Managiment","Journalism And Communication"],
+    courses:{
+     "English Language And Litrature":["math"],
+      "Geography And Enviroment studies":["math"],
+     "civics And Ethical Studies":["math"],
+     "History And Heritage Managiment":["math"],
+     "Journalism And Communication":["math"],
+
+    },
+   },
+     School_Of_Law:{
+    departments:["Law",""],
+    courses:{
+     "Law":["math"]
+    },
+   },
+     Education_And_Bihavioral_Science:{
+    departments:["Educational Planning And Management","Psychology","Early Child Education","Special Need And Inclusive Education"],
+    courses:{
+     "Educational Planning And Management":["math"],
+     "Psychology":["math"],
+     "Early Child Education":["math"],
+     "Special Need And Inclusive Education":["math"]
+
+    },
+   },
+     School_Of_Veternary_Medicine:{
+    departments:["Enginering","Management"],
+    courses:{
+     "Enginering":["math"]
+    },
+   },
+    Fresh_Student:{
+    departments:["Natural Fresh ","Social Fresh","Pre Engineering"],
+    courses:{
+     "Natural Fresh":["math"],
+      "Social Fresh":["math"],
+       "Pre Engineering":["math"],
+
+    },
+   },
+    Rimedial_Student:{
+    departments:["Natural Rimedial ","Social Rimedial"],
+    courses:{
+     "Natural Rimedial":["math"],
+      "Social Rimedial":["math"],
+
+    },
+   },
+  }
+
+
+let currentCollege="", currentCourse="", currentType="pdf";
+
+function selectCollege(college){
+  currentCollege=college;
+  document.getElementById("collegeSelection").classList.add("d-none");
+  document.getElementById("collegeSection").classList.remove("d-none");
+
+  const deptBox=document.getElementById("departmentList");
+  deptBox.innerHTML="";
+
+  data[college].departments.forEach((d,i)=>{
+    const div=document.createElement("div");
+    div.className="department-card"+(i===0?" active":"");
+    div.innerText=d;
+    div.onclick=()=>selectDepartment(college,d,div);
+    deptBox.appendChild(div);
+  });
+
+  selectDepartment(college,data[college].departments[0],deptBox.firstChild);
+}
+
+function backToColleges(){
+  document.getElementById("collegeSection").classList.add("d-none");
+  document.getElementById("collegeSelection").classList.remove("d-none");
+}
+
+function selectDepartment(college,dept,el){
+  document.querySelectorAll(".department-card").forEach(d=>d.classList.remove("active"));
+  el.classList.add("active");
+
+  const courseBox=document.getElementById("courseList");
+  courseBox.innerHTML="";
+  document.getElementById("courseTitle").innerText=dept+" Courses";
+
+  data[college].courses[dept].forEach((c,i)=>{
+    const div=document.createElement("div");
+    div.className="course-card";
+    div.innerText=c;
+div.onclick = () => {
+  const urlCollege = encodeURIComponent(college);
+  const urlCourse = encodeURIComponent(c); // <-- use 'c', not 'course'
+  window.location.href = `course_materials.html?college=${urlCollege}&course=${urlCourse}`;
+};
+
+    courseBox.appendChild(div);
+    if(i===0) showMaterials(college,c);
+  });
+}
+
+function setMaterialType(t){
+  currentType=t;
+  document.querySelectorAll("#materialNav .nav-link").forEach(n=>n.classList.remove("active"));
+  event.target.classList.add("active");
+  showMaterials(currentCollege,currentCourse);
+}
+
+function showMaterials(college,course){
+  currentCourse=course;
+  document.getElementById("materialSection").classList.remove("d-none");
+  document.getElementById("materialTitle").innerText=course+" Materials";
+
+  const box=document.getElementById("materialsContainer");
+  box.innerHTML="";
+
+  (data[college].materials[course]||[])
+    .filter(m=>m.type===currentType)
+    .forEach(m=>{
+ box.innerHTML += `
+<div class="col-md-4">
+  <div class="card material-card p-3">
+    <h6>${m.title}</h6>
+
+    <!-- OPEN PDF -->
+    <a href="${m.file}" target="_blank" class="btn btn-primary btn-sm mb-2">
+      Open
+    </a>
+
+    <!-- DOWNLOAD PDF -->
+    <a href="${m.file}" download class="btn btn-success btn-sm">
+      Download
+    </a>
+  </div>
+</div>
+`;
+});
+}
+</script>
+
+</body>
+</html>
